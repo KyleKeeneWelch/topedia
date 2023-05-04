@@ -1,0 +1,36 @@
+<!-- 2101940 Kyle Keene-Welch -->
+<!-- main.html -->
+<!-- Main html to be extended to the rest of the templates -->
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}" />
+    <title>Topedia</title>
+  </head>
+
+  <body>
+    <!-- Includes the navigation bar and associated content -->
+    {% include 'navbar.html' %}
+
+    <!-- Shows any flash messages. -->
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li>{{message}}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% block content %}
+
+    {% endblock %}
+
+    <!-- Links JavaScript file -->
+    <script src="{% static 'js/script.js' %}"></script>
+  </body>
+</html>

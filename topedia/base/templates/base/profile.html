@@ -1,0 +1,64 @@
+<!-- 2101940 Kyle Keene-Welch
+profile.html
+Displays a selected users profile and its associated content -->
+
+{% extends 'main.html' %}
+
+{% block content %}
+<main class="profile-page layout layout--3">
+  <div class="container">
+    <!-- Displays Topics -->
+    {% include 'base/topics_component.html' %}
+
+    <div class="roomList scroll">
+      <div class="profile">
+        <div class="profile__avatar">
+          <div class="avatar avatar--large active">
+            <img src="{{user.avatar.url}}" />
+          </div>
+        </div>
+        <div class="profile__info">
+          <h3>{{user.name}}</h3>
+          <p>@{{user.username}}</p>
+          <!-- Edit profile, follow and unfollow functionality -->
+          {% if request.user.is_authenticated %}
+            {% if request.user.id == user.id %}
+              <a href="" class="btn btn--main btn--pill">Edit Profile</a>
+            {% else %}
+              {% if following == False %}
+              <form method="POST" action="">
+                  {% csrf_token %}
+                  <button class="btn btn--main btn--pill" type="submit" name="status" value="setFollow">Follow</button>
+              </form>
+              {% else %}
+              <form method="POST" action="">
+                  {% csrf_token %}
+                  <button class="btn btn--main btn--pill" type="submit" name="status" value="setUnfollow">Unfollow</button>
+              </form>
+              {% endif %}
+            {% endif %}
+          {% endif %}
+        </div>
+        <div class="profile__about">
+          <h3>Biography</h3>
+          <p>
+            {{user.bio}}
+          </p>
+        </div>
+      </div>
+
+      <div class="roomList__header">
+        <div>
+          <h2>Study Rooms Hosted by {{user.name}}</a>
+          </h2>
+        </div>
+      </div>
+    <!-- Displays Topic Rooms -->
+      {% include 'base/feed_component.html' %}
+    </div>
+
+    <!-- Displays recent activity -->
+    {% include 'base/activity_component.html' %}
+  </div>
+</main>
+{% endblock content %}
